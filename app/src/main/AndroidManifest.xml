@@ -13,10 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieOnlineStreamingApp"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Activities.Homee"
-            android:label="@string/title_activity_homee"
-            android:theme="@style/Theme.MovieOnlineStreamingApp.NoActionBar"></activity>
         <activity android:name=".Activities.MoviePlayActivity" />
         <activity android:name=".Activities.TrailerPlayActivity" />
         <activity android:name=".Activities.ActorDetailActivity" />

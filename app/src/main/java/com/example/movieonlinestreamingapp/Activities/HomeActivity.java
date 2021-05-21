@@ -6,19 +6,14 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreHaiKichAdapter;
@@ -28,14 +23,11 @@ import com.example.movieonlinestreamingapp.Adapters.MovieGenreTamLyAdapter;
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreToiPhamAdapter;
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreVienTuongAdapter;
 import com.example.movieonlinestreamingapp.Adapters.MovieSearchAdapter;
-import com.example.movieonlinestreamingapp.Adapters.SliderPagerAdapter;
 import com.example.movieonlinestreamingapp.Client.RetrofitClient;
 import com.example.movieonlinestreamingapp.Interfaces.RetrofitService;
 import com.example.movieonlinestreamingapp.Models.MovieResponse;
 import com.example.movieonlinestreamingapp.Models.MovieResult;
-import com.example.movieonlinestreamingapp.Models.Slide;
 import com.example.movieonlinestreamingapp.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
