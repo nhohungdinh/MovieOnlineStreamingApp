@@ -1,9 +1,11 @@
 package com.example.movieonlinestreamingapp.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ import com.example.movieonlinestreamingapp.Interfaces.RetrofitService;
 import com.example.movieonlinestreamingapp.Models.MovieResponse;
 import com.example.movieonlinestreamingapp.Models.MovieResult;
 import com.example.movieonlinestreamingapp.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
@@ -73,12 +76,22 @@ public class HomeActivity extends AppCompatActivity {
     private MovieGenreToiPhamAdapter movieGenreToiPhamAdapter;
     private MovieGenreHaiKichAdapter movieGenreHaiKichAdapter;
     private MovieGenreKinhDiAdapter movieGenreKinhDiAdapter;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // diable keyword on start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.tool_bar);
+
+
         sourceSpinner = findViewById(R.id.source_spinner);
         queryEditText = findViewById(R.id.query_edit_text);
         querySearchButton = findViewById(R.id.query_search_button);
@@ -105,10 +118,12 @@ public class HomeActivity extends AppCompatActivity {
         genreHaiKichResultLayout = findViewById(R.id.genre_hai_kich_result_layout);
         genreKinhDiResultLayout = findViewById(R.id.genre_kinh_di_result_layout);
 
-        Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 //        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
 
         Paper.init(this);
