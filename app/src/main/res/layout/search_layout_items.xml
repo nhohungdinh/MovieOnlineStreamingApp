@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="3dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="#00008577">
+        <com.github.florent37.diagonallayout.DiagonalLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:diagonal_angle="0"
+            app:diagonal_direction="left"
+            app:diagonal_position="bottom"
+            >
+            <com.flaviofaria.kenburnsview.KenBurnsView
+                android:id="@+id/poster_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:scaleType="center"/>
+        </com.github.florent37.diagonallayout.DiagonalLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/poster_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "419136441389",
+    "project_id": "movieonlinestreamingapp",
+    "storage_bucket": "movieonlinestreamingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419136441389:android:df005496ac6b10522d7ca4",
+        "android_client_info": {
+          "package_name": "com.example.movieonlinestreamingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419136441389-n803j7a0g0nc4eme8r5j528dicfda5u4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHP6aF1w577BLOMPgXbUuSpVF27m5K00s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419136441389-n803j7a0g0nc4eme8r5j528dicfda5u4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
