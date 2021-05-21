@@ -5,19 +5,25 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreHaiKichAdapter;
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreHanhDongAdapter;
 import com.example.movieonlinestreamingapp.Adapters.MovieGenreKinhDiAdapter;
@@ -31,10 +37,13 @@ import com.example.movieonlinestreamingapp.Models.MovieResponse;
 import com.example.movieonlinestreamingapp.Models.MovieResult;
 import com.example.movieonlinestreamingapp.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.OnSpinnerItemSelectedListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NiceSpinner sourceSpinner;
     private EditText queryEditText;
@@ -77,15 +86,21 @@ public class HomeActivity extends AppCompatActivity {
     private MovieGenreHaiKichAdapter movieGenreHaiKichAdapter;
     private MovieGenreKinhDiAdapter movieGenreKinhDiAdapter;
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // diable keyword on start
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -121,11 +136,13 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
 //        getSupportActionBar().setIcon(R.drawable.ic_baseline_menu_24);
-
+        updateNavHeader();
         Paper.init(this);
         retrofitService = RetrofitClient.getClient().create(RetrofitService.class);
 
@@ -470,5 +487,47 @@ public class HomeActivity extends AppCompatActivity {
         super.onStop();
         // set the position of spinner in offline to retrieve at start
         Paper.book().write("position", sourceSpinner.getSelectedIndex());
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_log_out:
+                Intent loginActivity = new Intent(HomeActivity.this, LoginActivity.class);
+                mAuth.signOut();
+                startActivity(loginActivity);
+                finish();
+                break;
+            case R.id.nav_favourist:
+                Toast.makeText(this,"Favourist",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_change_password:
+                Toast.makeText(this,"Change Password",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
+    public void updateNavHeader(){
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUserName = headerView.findViewById(R.id.nav_username);
+        TextView navUserMail = headerView.findViewById(R.id.nav_user_mail);
+        ImageView navUserPhoto = headerView.findViewById(R.id.nav_user_photo);
+
+        navUserMail.setText(currentUser.getEmail());
+        navUserName.setText(currentUser.getDisplayName());
+
+        Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhoto);
     }
 }

@@ -5,34 +5,34 @@
 
         <item
             android:id="@+id/nav_favourist"
-            android:title="Favourist List"
-            android:icon="@drawable/ic_favorite"/>
+            android:icon="@drawable/ic_favorite"
+            android:title="Favourist List" />
 
     </group>
 
-    <group android:checkableBehavior="single">
 
-        <item
-            android:title="Profile">
-            <menu >
-                <item android:id="@+id/nav_change_password"
-                    android:title="Change Password"
-                    android:icon="@drawable/ic_baseline_person_24"/>
-            </menu>
-        </item>
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_change_password"
+                    android:icon="@drawable/ic_baseline_person_24"
+                    android:title="Change Password" />
+            </group>
+        </menu>
+    </item>
 
-    </group>
 
-    <group android:checkableBehavior="single">
+    <item android:title="Logout">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_log_out"
+                    android:icon="@drawable/ic_signout"
+                    android:title="Logout" />
+            </group>
+        </menu>
+    </item>
 
-        <item
-            android:title="Logout">
-            <menu >
-                <item android:id="@+id/nav_log_out"
-                    android:title="Logout"
-                    android:icon="@drawable/ic_signout"/>
-            </menu>
-        </item>
 
-    </group>
 </menu>
