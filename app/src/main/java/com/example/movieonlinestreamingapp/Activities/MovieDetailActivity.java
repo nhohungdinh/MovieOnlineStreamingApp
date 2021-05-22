@@ -28,6 +28,8 @@ import com.example.movieonlinestreamingapp.Models.Trailer;
 import com.example.movieonlinestreamingapp.R;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -60,7 +62,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private RecyclerView movieDetailCastRecycleView;
     private RecyclerView movieDetailVideosRecycleview;
 
-
+    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieDetailVideosRecycleview = findViewById(R.id.movie_detail_videos_recycle_view);
         movieDetailVideosRecycleview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         if (intent != null && intent.getExtras() != null){
             if (intent.getExtras().getString("id") != null){
                 int id = Integer.parseInt(intent.getExtras().getString("id"));
@@ -117,6 +121,43 @@ public class MovieDetailActivity extends AppCompatActivity {
                                     intent1.putExtra("video", videoUrl);
                                     intent1.putExtra("title", title);
                                     startActivity(intent1);
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<MovieResult> call,@NonNull Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+
+                movieDetailCommentBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Call<MovieResult> movieResultCall = retrofitService.getMovieByMovieId(id);
+                        movieResultCall.enqueue(new Callback<MovieResult>() {
+                            @Override
+                            public void onResponse(@NonNull Call<MovieResult> call,@NonNull Response<MovieResult> response) {
+                                MovieResult movieResultResponse = response.body();
+                                if (movieResultResponse != null){
+                                    String id1 = String.valueOf(id);
+
+                                    Double voteAverage = movieResultResponse.getVoteAverage();
+                                    String title = movieResultResponse.getTitle();
+                                    String poster = movieResultResponse.getPosterPath();
+                                    String overview = movieResultResponse.getOverview();
+                                    Intent intent2 = new Intent(MovieDetailActivity.this,CommentActivity.class);
+
+                                    intent2.putExtra("rate",String.valueOf(voteAverage));
+                                    intent2.putExtra("poster", poster);
+                                    intent2.putExtra("title", title);
+                                    intent2.putExtra("overview", overview);
+                                    intent2.putExtra("id1",id1);
+
+                                    mDatabase.child("Movie").child(id1).setValue(movieResultResponse);
+                                    startActivity(intent2);
 
                                 }
                             }
