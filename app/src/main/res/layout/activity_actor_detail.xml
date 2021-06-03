@@ -10,7 +10,7 @@
         android:id="@+id/actor_detail_diagonal_view"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        app:diagonal_angle="8"
+        app:diagonal_angle="0"
         app:diagonal_position="bottom"
         app:diagonal_direction="right"
         android:background="#00008577"
