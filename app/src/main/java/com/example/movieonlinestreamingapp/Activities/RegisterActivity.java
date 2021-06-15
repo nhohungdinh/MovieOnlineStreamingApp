@@ -125,7 +125,12 @@ public class RegisterActivity extends AppCompatActivity {
                     user.put("isUser","1");
                     df.set(user);
                     // after we need to update his profile and photo
-                    updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
+                    if (pickedImgUri != null){
+                        updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
+                    } else {
+                        updateUserInfoWithoutPhoto(name, mAuth.getCurrentUser());
+                    }
+
                 } else {
                     // user creation failed
                     showMessage("Account creation failed " + task.getException().getMessage());
@@ -136,6 +141,19 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
+    private void updateUserInfoWithoutPhoto(String name, FirebaseUser currentUser) {
+        UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name).build();
+        currentUser.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                showMessage("Register Complete");
+                updateUI();
+            }
+        });
+    }
+
     // update user profile and name
     private void updateUserInfo(String name, Uri pickedImgUri, FirebaseUser currentUser) {
 

@@ -528,6 +528,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navUserMail.setText(currentUser.getEmail());
         navUserName.setText(currentUser.getDisplayName());
 
-        Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhoto);
+        if (currentUser.getPhotoUrl() != null){
+            Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhoto);
+        } else {
+            Glide.with(this).load(R.drawable.userphoto).into(navUserPhoto);
+        }
+
+
     }
 }

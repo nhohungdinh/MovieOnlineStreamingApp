@@ -100,9 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.getResult().getString("isUser") != null){
                     updateUI();
                 }
-                if (task.getResult().getString("isAdmin") != null){
-                    startActivity(new Intent(getApplicationContext(),AdminActivity.class));
-                    finish();
+                if (task.getResult().getString("isBan") != null){
+                    updateUI();
                 }
             }
         });
